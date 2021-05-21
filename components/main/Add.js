@@ -1,68 +1,67 @@
-import React, { Component } from 'react'
-import{View,Button,TextInput} from 'react-native'
-import firebase from 'firebase'
+import React, { useState } from 'react';
+import{View,Button,TextInput} from 'react-native';
+import firebase from 'firebase';
 import 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
 
 
 
-export class Add extends Component {
-    constructor(props){
+function Add(props){
+    const [title, setTitle] = useState("")
+    const [topic, setTopic] = useState("")
+    const [description, setDescription] = useState("")
+    const {currentUser} = props
+    const username = currentUser.username
 
-        super(props)
-        this.state = {
-
-            title: '',
-            topic: '',
-            description: '',
-            
-        }
-
-        
-    }
-    onAdd(){
-        const { title, topic, description } = this.state;
+    const onAdd = () => {
         const uid = firebase.auth().currentUser.uid
         firebase.firestore().collection('posts')
             .add({
                 title,
-                topic,
+                topic,  
                 description,
-                uid
-                
+                uid,
+                username,
+                creation: firebase.firestore.FieldValue.serverTimestamp()
             })
         .catch((error) => {
             console.log(error)
         })
-
     }
 
-    render() {
+
         return (
             <View>
                 <TextInput
                     placeholder='title'
-                    onChangeText={(title) => this.setState({ title })}  
+                    onChangeText={(title) => setTitle(title)}  
                 
                 />
                 <TextInput
                     placeholder='topic'
-                    onChangeText={(topic) => this.setState({ topic })}  
+                    onChangeText={(topic) => setTopic(topic)}  
                 
                 />
                 <TextInput
                     placeholder='description'
-                    onChangeText={(description) => this.setState({ description })}  
+                    onChangeText={(description) => setDescription(description)}  
                 
                 />
 
                 <Button
-                    onPress={() => this.onAdd()}
+                    onPress={() => onAdd()}
                     title='Post'
                 />
             </View>
         )
     }
-}
 
-export default Add
+
+
+
+const mapStateToProps = (store) => ({
+    currentUser: store.userState.currentUser,
+    posts: store.userState.posts,
+  })
+export default connect(mapStateToProps, null)(Add);

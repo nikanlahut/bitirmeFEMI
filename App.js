@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 import firebase from 'firebase/app';
 
+
 import {Provider} from 'react-redux'
 import { createStore, applyMiddleware} from 'redux'
 import rootReducer from './redux/reducers'
@@ -32,6 +33,7 @@ import SignUp from './components/auth/SignUp'
 import Login from './components/auth/Login'
 import Main from './components/Main'
 import Add from './components/main/Add'
+import CommentScreen from './components/main/Comments'
 
 const Stack = createStackNavigator();
 
@@ -87,6 +89,7 @@ componentDidMount(){
         <Stack.Navigator initialRouteName='Main'>
           <Stack.Screen name ='Main' component={Main} options = {{headerShown:false}}/>
           <Stack.Screen name ='Post Something' component={Add} />
+          <Stack.Screen name ='Comment' component={CommentScreen} />
         </Stack.Navigator> 
         </NavigationContainer>
       </Provider>

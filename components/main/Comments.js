@@ -15,8 +15,7 @@ function Comment(props) {
     const username = currentUser.username
 
     useEffect(() => {
-
-        /*
+        /*  
         function matchUserToComment(comments) {
             for (let i = 0; i < comments.length; i++) {
                 if (comments[i].hasOwnProperty('user')) {
@@ -75,7 +74,6 @@ function Comment(props) {
                 data={comments}
                 renderItem={({ item }) => (
                     <View>
-
                             <Text>
                                 {item.username}
                             </Text>
