@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import {RefreshControl, View, Text, FlatList, Button, TextInput } from 'react-native'
+import {SafeAreaView, RefreshControl, View, Text, FlatList, Button, TextInput, ScrollView } from 'react-native'
 
 import firebase from 'firebase'
 require('firebase/firestore')
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { fetchUserPosts } from '../../redux/actions'
+import {Restart} from 'fiction-expo-restart';
 
 function Comment(props) {
     const [comments, setComments] = useState([])
@@ -51,7 +53,7 @@ function Comment(props) {
          /* else {
             matchUserToComment(comments)
         } */
-    }, [props.route.params.postId, props.users])
+    }, [props.route.params.postId])
 
 
     const onCommentSend = () => {

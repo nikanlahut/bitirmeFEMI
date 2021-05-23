@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import{View,Button,TextInput} from 'react-native';
+import{View,Button,TextInput, Alert} from 'react-native';
 import firebase from 'firebase';
 import 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { connect } from 'react-redux';
-
+import { fetchUserPosts } from '../../redux/actions';
+import {Restart} from 'fiction-expo-restart';
 
 
 function Add(props){
@@ -29,6 +30,11 @@ function Add(props){
             console.log(error)
         })
     }
+    const AddAndRestart = async () => {
+        await onAdd();
+        Alert.alert('Post is successful');
+        Restart();
+    }
 
 
         return (
@@ -50,7 +56,7 @@ function Add(props){
                 />
 
                 <Button
-                    onPress={() => onAdd()}
+                    onPress={() => {AddAndRestart()}}
                     title='Post'
                 />
             </View>

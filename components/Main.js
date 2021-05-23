@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {fetchUser, fetchUserPosts} from '../redux/actions/index'
+import {fetchUser, fetchUserPosts, fetchFollowing} from '../redux/actions/index'
 
 
 import FeedScreen from './main/Feed'
@@ -13,6 +13,7 @@ import Profile from './main/Profile'
 import Forum from './main/Forum'
 import ProfileStack from './ProfileStack'
 import ForumStack from './ForumStack'
+import FollowStack from './FollowStack'
 
 const Tab = createBottomTabNavigator();
 const Empty=() => {
@@ -22,6 +23,7 @@ export class Main extends Component {
     componentDidMount(){
         this.props.fetchUser();
         this.props.fetchUserPosts();
+        this.props.fetchFollowing();
     }
     render() {
         return (
@@ -45,6 +47,12 @@ export class Main extends Component {
                         <MaterialCommunityIcons name='card-text-outline' color={color} size={26}/>
                     )
                 }}  />
+                <Tab.Screen name ='Follow' component={FollowStack}
+                options={{
+                    tabBarIcon:({color,size}) => (
+                        <MaterialCommunityIcons name='mdiBookmark' color={color} size={26}/>
+                    )
+                }}  />
                 <Tab.Screen name ='Post' component={Empty}
                 listeners={({navigation}) => ({
                     tabPress: event => {
@@ -65,7 +73,9 @@ export class Main extends Component {
 }
 
 const mapStateToProps = (store) => ({
-    currentUser: store.userState.currentUser
+    currentUser: store.userState.currentUser,
+    posts: store.userState.posts,
+    following: store.userState.following,
 })
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts},dispatch)
+const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser, fetchUserPosts, fetchFollowing},dispatch)
 export default connect(mapStateToProps, mapDispatchProps)(Main);

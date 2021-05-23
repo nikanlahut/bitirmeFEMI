@@ -15,6 +15,7 @@ function Profile(props) {
         const subscriber = firebase.firestore()
           .collection('posts')
           .where('uid', '==', uid)
+          .orderBy("creation", "desc")
           .onSnapshot(querySnapshot => {
             const posts = [];
       
@@ -28,7 +29,8 @@ function Profile(props) {
             setPosts(posts);
             setLoading(false);
             console.log()
-          });
+          }
+          );
       
         // Unsubscribe from events when no longer in use
         return () => subscriber();
