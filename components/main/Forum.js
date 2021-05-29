@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { fetchUserPosts } from '../../redux/actions';
 
 function Forum(props) {
-    //const [loading, setLoading] = React.useState(true); // Set loading to true on component mount
-    //const [posts, setPosts] = React.useState([]); // Initial empty array of users
-    const {posts} = props;
+    const [loading, setLoading] = React.useState(true); // Set loading to true on component mount
+    const [posts, setPosts] = React.useState([]); // Initial empty array of users
+    //const {posts} = props;
     const follow = [];
 
     
@@ -24,7 +24,7 @@ function Forum(props) {
       })
   }
 
-   /*
+   
     React.useEffect(() => {
       const uid = firebase.auth().currentUser.uid
         const subscriber = firebase.firestore()
@@ -48,7 +48,7 @@ function Forum(props) {
         // Unsubscribe from events when no longer in use
         return () => subscriber();
       }, []); 
-      */
+      
     
       return (
         <FlatList
@@ -63,13 +63,13 @@ function Forum(props) {
               title= "Comments"
               onPress = {()=>
                props.navigation.navigate('Comment',
-              {postId: item.id})}
+              {postId: item.key})}
               See Comments
             />
             <Text>    </Text>
             <Button
                     title="Follow"
-                    onPress={() => onFollow(item.id)}
+                    onPress={() => onFollow(item.key)}
                 />
                 <Text> ----- </Text>
             </View>

@@ -33,7 +33,7 @@ function Add(props){
     const AddAndRestart = async () => {
         await onAdd();
         Alert.alert('Post is successful');
-        Restart();
+        //Restart();
     }
 
 
