@@ -68,6 +68,17 @@ function Comment(props) {
             })
     }
 
+    const deleteComment = (commentId) => {
+        firebase.firestore().collection('posts')
+        .doc(props.route.params.postId)
+        .collection('comments')
+        .doc(commentId)
+        .delete()
+        .then(() => {
+            console.log('Comment deleted');
+          })
+}
+
     return (
         <View>
             <FlatList
@@ -80,6 +91,10 @@ function Comment(props) {
                                 {item.username}
                             </Text>
                         <Text>{item.text}</Text>
+                        <Button
+                    title="Delete"
+                    onPress={() => deleteComment(item.id)}
+                />
                     </View>
                 )}
                 

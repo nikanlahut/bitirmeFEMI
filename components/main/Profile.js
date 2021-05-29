@@ -39,6 +39,15 @@ function Profile(props) {
       const onLogout = () => {
         firebase.auth().signOut();
     }
+
+    const deletePost = (postId) => {
+      firebase.firestore().collection('posts')
+      .doc(postId)
+      .delete()
+      .then(() => {
+        console.log('Post deleted');
+      })
+}
     
     
       return (
@@ -58,6 +67,10 @@ function Profile(props) {
             <View style={{ height: 50, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <Text>Title: {item.title}</Text>
               <Text>Topic: {item.topic}</Text>
+              <Button
+                    title="Delete"
+                    onPress={() => deletePost(item.key)}
+                />
             </View>
           )}
         />
